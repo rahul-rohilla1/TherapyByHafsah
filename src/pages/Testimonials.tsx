@@ -22,9 +22,29 @@ const Testimonials = () => {
     }
   ]);
 
-  const handleAddTestimonial = (e: React.FormEvent) => {
+  const handleAddTestimonial = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    
+    try {
+      const response = await fetch("https://formspree.io/f/therapy@hafsahmasroor.com", {
+        method: "POST",
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      
+      if (response.ok) {
+        setSubmitted(true);
+        form.reset();
+      } else {
+        alert("There was an error submitting your reflection. Please try again.");
+      }
+    } catch (error) {
+      alert("There was an error submitting your reflection. Please try again.");
+    }
   };
 
   return (
@@ -74,6 +94,7 @@ const Testimonials = () => {
               <div className="space-y-3 md:space-y-4">
                 <label className="text-[10px] md:text-xs uppercase tracking-[0.2em] font-bold text-brand-coral ml-2">Your Reflection</label>
                 <textarea 
+                  name="reflection"
                   required
                   rows={5}
                   className="w-full px-6 md:px-8 py-4 md:py-6 rounded-2xl md:rounded-3xl bg-brand-cream/30 border border-brand-coral/10 focus:outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all resize-none text-base md:text-lg"
@@ -85,6 +106,7 @@ const Testimonials = () => {
                 <label className="text-[10px] md:text-xs uppercase tracking-[0.2em] font-bold text-brand-coral ml-2">Name / Identifier (Optional)</label>
                 <input 
                   type="text" 
+                  name="author"
                   className="w-full px-6 md:px-8 py-4 md:py-6 rounded-2xl md:rounded-3xl bg-brand-cream/30 border border-brand-coral/10 focus:outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all text-base md:text-lg h-12 md:h-14"
                   placeholder="e.g. Client, New Delhi"
                 />

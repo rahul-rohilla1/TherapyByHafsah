@@ -25,10 +25,29 @@ const BookSession = () => {
     }
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // In a real app, this would send to therapy@hafsahmasroor.com
-    setSubmitted(true);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    
+    try {
+      const response = await fetch("https://formspree.io/f/therapy@hafsahmasroor.com", {
+        method: "POST",
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      
+      if (response.ok) {
+        setSubmitted(true);
+        form.reset();
+      } else {
+        alert("There was an error submitting your form. Please try again or email directly.");
+      }
+    } catch (error) {
+      alert("There was an error submitting your form. Please try again or email directly.");
+    }
   };
 
   return (
@@ -94,44 +113,44 @@ const BookSession = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                       <div className="space-y-2">
                         <label className="text-[10px] uppercase tracking-widest font-bold text-brand-coral/60 ml-2">Full Name</label>
-                        <input type="text" required className="w-full p-4 md:p-5 bg-brand-cream/30 rounded-xl md:rounded-2xl border border-brand-coral/10 outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all h-12 md:h-14" />
+                        <input type="text" name="full_name" required className="w-full p-4 md:p-5 bg-brand-cream/30 rounded-xl md:rounded-2xl border border-brand-coral/10 outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all h-12 md:h-14" />
                       </div>
                       <div className="space-y-2">
                         <label className="text-[10px] uppercase tracking-widest font-bold text-brand-coral/60 ml-2">Sex</label>
-                        <input type="text" required className="w-full p-4 md:p-5 bg-brand-cream/30 rounded-xl md:rounded-2xl border border-brand-coral/10 outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all h-12 md:h-14" />
+                        <input type="text" name="sex" required className="w-full p-4 md:p-5 bg-brand-cream/30 rounded-xl md:rounded-2xl border border-brand-coral/10 outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all h-12 md:h-14" />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                       <div className="space-y-2">
                         <label className="text-[10px] uppercase tracking-widest font-bold text-brand-coral/60 ml-2">Age</label>
-                        <input type="text" required className="w-full p-4 md:p-5 bg-brand-cream/30 rounded-xl md:rounded-2xl border border-brand-coral/10 outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all h-12 md:h-14" />
+                        <input type="text" name="age" required className="w-full p-4 md:p-5 bg-brand-cream/30 rounded-xl md:rounded-2xl border border-brand-coral/10 outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all h-12 md:h-14" />
                       </div>
                       <div className="space-y-2">
                         <label className="text-[10px] uppercase tracking-widest font-bold text-brand-coral/60 ml-2">Date of Birth</label>
-                        <input type="text" required placeholder="dd/mm/yyyy" className="w-full p-4 md:p-5 bg-brand-cream/30 rounded-xl md:rounded-2xl border border-brand-coral/10 outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all h-12 md:h-14" />
+                        <input type="text" name="dob" required placeholder="dd/mm/yyyy" className="w-full p-4 md:p-5 bg-brand-cream/30 rounded-xl md:rounded-2xl border border-brand-coral/10 outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all h-12 md:h-14" />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                       <div className="space-y-2">
                         <label className="text-[10px] uppercase tracking-widest font-bold text-brand-coral/60 ml-2">Phone Number</label>
-                        <input type="tel" required className="w-full p-4 md:p-5 bg-brand-cream/30 rounded-xl md:rounded-2xl border border-brand-coral/10 outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all h-12 md:h-14" />
+                        <input type="tel" name="phone" required className="w-full p-4 md:p-5 bg-brand-cream/30 rounded-xl md:rounded-2xl border border-brand-coral/10 outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all h-12 md:h-14" />
                       </div>
                       <div className="space-y-2">
                         <label className="text-[10px] uppercase tracking-widest font-bold text-brand-coral/60 ml-2">Email Address</label>
-                        <input type="email" required className="w-full p-4 md:p-5 bg-brand-cream/30 rounded-xl md:rounded-2xl border border-brand-coral/10 outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all h-12 md:h-14" />
+                        <input type="email" name="email" required className="w-full p-4 md:p-5 bg-brand-cream/30 rounded-xl md:rounded-2xl border border-brand-coral/10 outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all h-12 md:h-14" />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                       <div className="space-y-2">
                         <label className="text-[10px] uppercase tracking-widest font-bold text-brand-coral/60 ml-2">Occupation</label>
-                        <input type="text" required className="w-full p-4 md:p-5 bg-brand-cream/30 rounded-xl md:rounded-2xl border border-brand-coral/10 outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all h-12 md:h-14" />
+                        <input type="text" name="occupation" required className="w-full p-4 md:p-5 bg-brand-cream/30 rounded-xl md:rounded-2xl border border-brand-coral/10 outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all h-12 md:h-14" />
                       </div>
                       <div className="space-y-2">
                         <label className="text-[10px] uppercase tracking-widest font-bold text-brand-coral/60 ml-2">Relationship Status</label>
-                        <input type="text" required className="w-full p-4 md:p-5 bg-brand-cream/30 rounded-xl md:rounded-2xl border border-brand-coral/10 outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all h-12 md:h-14" />
+                        <input type="text" name="relationship_status" required className="w-full p-4 md:p-5 bg-brand-cream/30 rounded-xl md:rounded-2xl border border-brand-coral/10 outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all h-12 md:h-14" />
                       </div>
                     </div>
 
@@ -140,39 +159,39 @@ const BookSession = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                       <div className="space-y-2">
                         <label className="text-[10px] uppercase tracking-widest font-bold text-brand-coral/60 ml-2">Contact Name</label>
-                        <input type="text" required className="w-full p-4 md:p-5 bg-brand-cream/30 rounded-xl md:rounded-2xl border border-brand-coral/10 outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all h-12 md:h-14" />
+                        <input type="text" name="emergency_contact_name" required className="w-full p-4 md:p-5 bg-brand-cream/30 rounded-xl md:rounded-2xl border border-brand-coral/10 outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all h-12 md:h-14" />
                       </div>
                       <div className="space-y-2">
                         <label className="text-[10px] uppercase tracking-widest font-bold text-brand-coral/60 ml-2">Contact Number</label>
-                        <input type="text" required className="w-full p-4 md:p-5 bg-brand-cream/30 rounded-xl md:rounded-2xl border border-brand-coral/10 outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all h-12 md:h-14" />
+                        <input type="text" name="emergency_contact_phone" required className="w-full p-4 md:p-5 bg-brand-cream/30 rounded-xl md:rounded-2xl border border-brand-coral/10 outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all h-12 md:h-14" />
                       </div>
                     </div>
 
                     <div className="space-y-2">
                       <label className="text-[10px] uppercase tracking-widest font-bold text-brand-coral/60 ml-2">Relationship to Emergency Contact</label>
-                      <input type="text" required className="w-full p-4 md:p-5 bg-brand-cream/30 rounded-xl md:rounded-2xl border border-brand-coral/10 outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all h-12 md:h-14" />
+                      <input type="text" name="emergency_contact_relationship" required className="w-full p-4 md:p-5 bg-brand-cream/30 rounded-xl md:rounded-2xl border border-brand-coral/10 outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all h-12 md:h-14" />
                     </div>
 
                     <h4 className="text-xs uppercase tracking-[0.3em] font-bold text-brand-coral border-b border-brand-coral/10 pb-4 pt-6">Clinical Context</h4>
                     
                     <div className="space-y-2">
                       <label className="text-[10px] uppercase tracking-widest font-bold text-brand-coral/60 ml-2">Reasons for seeking therapy</label>
-                      <textarea required rows={4} className="w-full p-4 md:p-5 bg-brand-cream/30 rounded-2xl md:rounded-3xl border border-brand-coral/10 outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all resize-none"></textarea>
+                      <textarea name="reasons_for_therapy" required rows={4} className="w-full p-4 md:p-5 bg-brand-cream/30 rounded-2xl md:rounded-3xl border border-brand-coral/10 outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all resize-none"></textarea>
                     </div>
                     
                     <div className="space-y-2">
                       <label className="text-[10px] uppercase tracking-widest font-bold text-brand-coral/60 ml-2">Previous therapy/psychiatrist consults?</label>
-                      <textarea required rows={3} className="w-full p-4 md:p-5 bg-brand-cream/30 rounded-2xl md:rounded-3xl border border-brand-coral/10 outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all resize-none"></textarea>
+                      <textarea name="previous_therapy" required rows={3} className="w-full p-4 md:p-5 bg-brand-cream/30 rounded-2xl md:rounded-3xl border border-brand-coral/10 outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all resize-none"></textarea>
                     </div>
                     
                     <div className="space-y-2">
                       <label className="text-[10px] uppercase tracking-widest font-bold text-brand-coral/60 ml-2">Current medications (if any)</label>
-                      <textarea required rows={3} className="w-full p-4 md:p-5 bg-brand-cream/30 rounded-2xl md:rounded-3xl border border-brand-coral/10 outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all resize-none"></textarea>
+                      <textarea name="current_medications" required rows={3} className="w-full p-4 md:p-5 bg-brand-cream/30 rounded-2xl md:rounded-3xl border border-brand-coral/10 outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all resize-none"></textarea>
                     </div>
                     
                     <div className="space-y-2">
                       <label className="text-[10px] uppercase tracking-widest font-bold text-brand-coral/60 ml-2">Preferred days and times for consult</label>
-                      <textarea required rows={3} className="w-full p-4 md:p-5 bg-brand-cream/30 rounded-2xl md:rounded-3xl border border-brand-coral/10 outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all resize-none"></textarea>
+                      <textarea name="preferred_timing" required rows={3} className="w-full p-4 md:p-5 bg-brand-cream/30 rounded-2xl md:rounded-3xl border border-brand-coral/10 outline-none focus:ring-2 focus:ring-brand-coral/20 transition-all resize-none"></textarea>
                     </div>
                   </div>
 

@@ -4,6 +4,7 @@ import { Quote, Star, Send, CheckCircle2 } from 'lucide-react';
 
 const Testimonials = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [testimonials, setTestimonials] = useState([
     {
       text: "Hafsah's approach is deeply insightful. I felt truly 'found' in our sessions, navigating parts of myself I hadn't even named yet.",
@@ -22,13 +23,16 @@ const Testimonials = () => {
     }
   ]);
 
+  const FORMSPREE_ID = "mlgwygan";
+
   const handleAddTestimonial = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true);
     const form = e.currentTarget;
     const formData = new FormData(form);
     
     try {
-      const response = await fetch("https://formspree.io/f/therapy@hafsahmasroor.com", {
+      const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
         method: "POST",
         body: formData,
         headers: {
@@ -40,10 +44,13 @@ const Testimonials = () => {
         setSubmitted(true);
         form.reset();
       } else {
-        alert("There was an error submitting your reflection. Please try again.");
+        const data = await response.json();
+        alert(data.error || "There was an error submitting your reflection. Please try again.");
       }
     } catch (error) {
-      alert("There was an error submitting your reflection. Please try again.");
+      alert("There was a connection error. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -114,10 +121,11 @@ const Testimonials = () => {
               
               <button 
                 type="submit"
-                className="w-full py-4 md:py-6 bg-brand-coral text-white rounded-full font-bold shadow-lg hover:shadow-2xl transition-all flex items-center justify-center group text-base md:text-lg hover:scale-[1.02] h-12 md:h-16"
+                disabled={isSubmitting}
+                className={`w-full py-4 md:py-6 bg-brand-coral text-white rounded-full font-bold shadow-lg transition-all flex items-center justify-center group text-base md:text-lg h-12 md:h-16 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:shadow-2xl hover:scale-[1.02]'}`}
               >
-                Submit Reflection
-                <Send className="ml-3 md:ml-4 group-hover:translate-x-2 transition-transform duration-300 md:w-6 md:h-6" size={20} />
+                {isSubmitting ? 'Sending...' : 'Submit Reflection'}
+                {!isSubmitting && <Send className="ml-3 md:ml-4 group-hover:translate-x-2 transition-transform duration-300 md:w-6 md:h-6" size={20} />}
               </button>
             </form>
           ) : (

@@ -4,6 +4,7 @@ import { Send, CheckCircle2, HelpCircle, ChevronDown, ChevronUp, Sparkles, User 
 
 const BookSession = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const faqs = [
@@ -25,13 +26,18 @@ const BookSession = () => {
     }
   ];
 
+  // REPLACE 'YOUR_FORM_ID' with the ID from Formspree (e.g., 'xbjwpnre')
+  // Using email directly often fails with AJAX unless verified in account
+  const FORMSPREE_ID = "mlgwygan"; 
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true);
     const form = e.currentTarget;
     const formData = new FormData(form);
     
     try {
-      const response = await fetch("https://formspree.io/f/therapy@hafsahmasroor.com", {
+      const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
         method: "POST",
         body: formData,
         headers: {
@@ -43,10 +49,13 @@ const BookSession = () => {
         setSubmitted(true);
         form.reset();
       } else {
-        alert("There was an error submitting your form. Please try again or email directly.");
+        const data = await response.json();
+        alert(data.error || "There was an error submitting your form. Please try again or email directly.");
       }
     } catch (error) {
-      alert("There was an error submitting your form. Please try again or email directly.");
+      alert("There was a connection error. Please check your internet or email directly.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -198,10 +207,11 @@ const BookSession = () => {
                   <div className="pt-6 md:pt-8">
                     <button 
                       type="submit"
-                      className="w-full h-14 md:h-16 bg-brand-coral text-white rounded-full text-lg md:text-xl font-bold hover:scale-[1.02] transition-all shadow-xl flex items-center justify-center group"
+                      disabled={isSubmitting}
+                      className={`w-full h-14 md:h-16 bg-brand-coral text-white rounded-full text-lg md:text-xl font-bold transition-all shadow-xl flex items-center justify-center group ${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:scale-[1.02]'}`}
                     >
-                      Submit Application
-                      <Send className="ml-3 md:ml-4 group-hover:translate-x-2 transition-transform duration-300 w-5 h-5 md:w-6 md:h-6" />
+                      {isSubmitting ? 'Sending...' : 'Submit Application'}
+                      {!isSubmitting && <Send className="ml-3 md:ml-4 group-hover:translate-x-2 transition-transform duration-300 w-5 h-5 md:w-6 md:h-6" />}
                     </button>
                   </div>
                 </form>

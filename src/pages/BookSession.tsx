@@ -76,7 +76,7 @@ const BookSession = () => {
             </div>
 
             <div className="bg-white rounded-[32px] md:rounded-[48px] p-8 md:p-12 border border-brand-coral/10 shadow-xl relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-48 h-48 bg-brand-peach/20 rounded-full blur-3xl -mr-24 -mt-24"></div>
+              <div className="absolute top-0 right-0 w-48 h-48 bg-brand-peach/20 rounded-full -mr-24 -mt-24"></div>
               <h3 className="text-xs uppercase tracking-widest font-bold text-brand-coral mb-8 md:mb-10 relative z-10">Fee Structure</h3>
               <div className="space-y-8 md:space-y-10 relative z-10">
                 <div className="flex justify-between items-end pb-6 md:pb-8 border-b border-brand-coral/10">
@@ -105,7 +105,7 @@ const BookSession = () => {
 
           {/* Right Side: Form */}
           <div className="bg-white p-8 md:p-16 rounded-[32px] md:rounded-[60px] border border-brand-coral/10 shadow-2xl relative overflow-hidden order-2 md:row-span-2">
-            <div className="absolute bottom-0 right-0 w-64 h-64 bg-brand-peach/20 rounded-full blur-3xl -mr-32 -mb-32"></div>
+            <div className="absolute bottom-0 right-0 w-64 h-64 bg-brand-peach/20 rounded-full -mr-32 -mb-32"></div>
             {!submitted ? (
               <div className="space-y-10 md:space-y-12 relative z-10">
                 <div className="space-y-4">

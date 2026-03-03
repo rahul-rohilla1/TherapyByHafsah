@@ -50,9 +50,9 @@ const Home = () => {
             transition={{ duration: 1, delay: 0.2 }}
             className="relative"
           >
-            {/* Decorative background elements - simplified and straightened */}
-            <div className="absolute -top-10 -right-10 w-48 md:w-64 h-48 md:h-64 bg-brand-coral/5 rounded-[40px] -z-10 blur-2xl"></div>
-            <div className="absolute -bottom-10 -left-10 w-32 md:w-48 h-32 md:h-48 bg-brand-peach/30 rounded-full -z-10 blur-xl"></div>
+            {/* Decorative background elements - simplified */}
+            <div className="absolute -top-10 -right-10 w-48 md:w-64 h-48 md:h-64 bg-brand-coral/5 rounded-[40px] -z-10"></div>
+            <div className="absolute -bottom-10 -left-10 w-32 md:w-48 h-32 md:h-48 bg-brand-peach/30 rounded-full -z-10"></div>
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[105%] h-[105%] border border-brand-coral/10 rounded-[40px] -z-20"></div>
 
             <div className="relative p-2 flex justify-center items-center">

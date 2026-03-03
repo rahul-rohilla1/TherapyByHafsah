@@ -31,7 +31,7 @@ const PageWrapper = ({ children }: { children: React.ReactNode }) => {
 export default function App() {
   return (
     <Router>
-      <div className="min-h-screen flex flex-col selection:bg-brand-olive/20 selection:text-brand-olive">
+      <div className="min-h-screen flex flex-col selection:bg-brand-coral/20 selection:text-brand-coral">
         <Navbar />
         <main className="flex-grow">
           <PageWrapper>
